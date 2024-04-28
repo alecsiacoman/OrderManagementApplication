@@ -3,14 +3,16 @@ package com.example.pt2024_30423_coman_alecsia_assignment_3.Model;
 public class Client {
     private int id;
     private String name;
+    private String phone;
     private String address;
     private String email;
     private int age;
 
-    public Client(String name, String address, String email, int age){
+    public Client(String name, String email, String phone, String address, int age){
         this.name = name;
-        this.address = address;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
         this.age = age;
     }
 
@@ -25,6 +27,14 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getId() {

@@ -33,7 +33,7 @@ public class ConnectionFactory {
         return connection;
     }
 
-    public Connection getConnection(){
+    public static Connection getConnection(){
         return connectionFactory.createConnection();
     }
 
