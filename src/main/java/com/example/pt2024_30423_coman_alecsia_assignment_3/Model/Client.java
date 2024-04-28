@@ -7,11 +7,17 @@ public class Client {
     private String email;
     private int age;
 
+    public Client(String name, String address, String email, int age){
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.age = age;
+    }
 
-
-
-
-
+    @Override
+    public String toString(){
+        return "Client [id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + ", age=" + age + "]";
+    }
 
     public String getName() {
         return name;
@@ -42,7 +48,8 @@ public class Client {
     }
 
     public void setAge(int age) {
-        this.age = age;
+        if(age > 10)
+            this.age = age;
     }
 
     public String getAddress() {

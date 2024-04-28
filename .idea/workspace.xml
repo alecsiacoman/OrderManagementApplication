@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02ce4fcb-8ed6-4e1d-bc57-4f098efebece" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/Validator/ClientAgeValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/Validator/EmailValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/Validator/Validator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Connection/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Connection/ConnectionFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Client.java" afterDir="false" />
@@ -19,6 +22,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -65,7 +69,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1714305572941</updated>
-      <workItem from="1714305574200" duration="2180000" />
+      <workItem from="1714305574200" duration="3836000" />
     </task>
     <servers />
   </component>
