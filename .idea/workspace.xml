@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02ce4fcb-8ed6-4e1d-bc57-4f098efebece" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/OrderBLL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/OrderDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Order.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/client-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/order-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/product-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/ClientBLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/ClientBLL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/Validator/ClientAgeValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/ClientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/ClientDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +20,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -74,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1714305572941</updated>
       <workItem from="1714305574200" duration="6658000" />
-      <workItem from="1714751552559" duration="2840000" />
+      <workItem from="1714751552559" duration="4380000" />
     </task>
     <servers />
   </component>
