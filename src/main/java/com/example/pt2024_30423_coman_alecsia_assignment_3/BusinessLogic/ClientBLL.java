@@ -1,6 +1,5 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic;
 
-import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.ClientAgeValidator;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.EmailValidator;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.Validator;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess.ClientDAO;
@@ -16,7 +15,6 @@ public class ClientBLL {
     public ClientBLL(){
         validators = new ArrayList<Validator<Client>>();
         validators.add(new EmailValidator());
-        validators.add(new ClientAgeValidator());
     }
 
     public Client findClientById(int id){

@@ -3,22 +3,18 @@ package com.example.pt2024_30423_coman_alecsia_assignment_3.Model;
 public class Client {
     private int id;
     private String name;
-    private String phone;
-    private String address;
     private String email;
-    private int age;
+    private String phone;
 
-    public Client(String name, String email, String phone, String address, int age){
+    public Client(String name, String email, String phone){
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.address = address;
-        this.age = age;
     }
 
     @Override
     public String toString(){
-        return "Client [id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + ", age=" + age + "]";
+        return "Client [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";
     }
 
     public String getName() {
@@ -51,22 +47,5 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        if(age > 10)
-            this.age = age;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
