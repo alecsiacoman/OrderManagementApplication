@@ -5,5 +5,11 @@ module com.example.pt2024_30423_coman_alecsia_assignment_3 {
 
 
     opens com.example.pt2024_30423_coman_alecsia_assignment_3 to javafx.fxml;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.Model to javafx.fxml;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic to javafx.fxml;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess to javafx.fxml;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.Presentation.Controller to javafx.fxml;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.Presentation.View to javafx.fxml;
+
     exports com.example.pt2024_30423_coman_alecsia_assignment_3;
 }
