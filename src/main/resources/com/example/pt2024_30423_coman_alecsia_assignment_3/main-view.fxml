@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="775.0" style="-fx-background-color: #7B9EA8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="775.0" style="-fx-background-color: #7B9EA8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pt2024_30423_coman_alecsia_assignment_3.Presentation.MainController">
    <children>
       <Label layoutX="96.0" layoutY="88.0" text="ORDERS MANAGEMENT APPLICATION">
          <font>
@@ -16,7 +16,7 @@
       </Label>
       <HBox alignment="CENTER" layoutX="100.0" layoutY="206.0" prefHeight="57.0" prefWidth="576.0">
          <children>
-            <Button fx:id="btnClient" mnemonicParsing="false" text="Client operations">
+            <Button fx:id="btnClient" mnemonicParsing="false" onAction="#handleButtonAction" text="Client operations">
                <font>
                   <Font name="Segoe UI" size="18.0" />
                </font>
@@ -24,7 +24,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnProduct" mnemonicParsing="false" text="Product operations">
+            <Button fx:id="btnProduct" mnemonicParsing="false" onAction="#handleButtonAction" text="Product operations">
                <font>
                   <Font name="Segoe UI" size="18.0" />
                </font>
@@ -32,7 +32,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnOrder" mnemonicParsing="false" text="Order operations">
+            <Button fx:id="btnOrder" mnemonicParsing="false" onAction="#handleButtonAction" text="Order operations">
                <font>
                   <Font name="Segoe UI" size="18.0" />
                </font>
