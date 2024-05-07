@@ -3,10 +3,7 @@ package com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Connection.ConnectionFactory;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +43,7 @@ public class ClientDAO {
         ResultSet resultSet = null;
         int id = -1;
         try{
-            preparedStatement = connection.prepareStatement(insertStatementString);
+            preparedStatement = connection.prepareStatement(insertStatementString, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getName());
             preparedStatement.setString(2, client.getEmail());
             preparedStatement.setString(3, client.getPhone());

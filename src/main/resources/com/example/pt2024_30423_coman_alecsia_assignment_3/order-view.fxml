@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="783.0" style="-fx-background-color: #7B9EA8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="783.0" style="-fx-background-color: #7B9EA8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Order">
    <children>
       <Label layoutX="218.0" layoutY="29.0" text="ORDER MANAGEMENT">
          <font>
@@ -74,7 +74,7 @@
       </Button>
       <ComboBox layoutX="173.0" layoutY="188.0" prefHeight="25.0" prefWidth="187.0" />
       <ComboBox layoutX="173.0" layoutY="234.0" prefHeight="25.0" prefWidth="187.0" />
-      <Button layoutX="50.0" layoutY="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="79.0" text="BACK">
+      <Button fx:id="btnBack" layoutX="50.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

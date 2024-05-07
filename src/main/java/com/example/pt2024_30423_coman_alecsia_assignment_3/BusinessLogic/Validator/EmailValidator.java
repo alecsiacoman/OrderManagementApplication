@@ -1,5 +1,6 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator;
 
+import com.example.pt2024_30423_coman_alecsia_assignment_3.AlertUtils;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
 
 import java.util.regex.Pattern;
@@ -11,6 +12,6 @@ public class EmailValidator implements Validator<Client> {
     public void validate(Client client) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         if(!pattern.matcher(client.getEmail()).matches())
-            throw new IllegalArgumentException("The email is not valid!");
+            AlertUtils.showAlert("The email is not valid! Example: smith@example.com");
     }
 }

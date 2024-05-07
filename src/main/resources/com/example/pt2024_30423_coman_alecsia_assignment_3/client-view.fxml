@@ -31,12 +31,12 @@
             <Font name="Segoe UI Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="140.0" layoutY="144.0">
+      <TextField fx:id="txtID" layoutX="140.0" layoutY="144.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="140.0" layoutY="188.0">
+      <TextField fx:id="txtName" layoutX="140.0" layoutY="188.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
@@ -51,17 +51,17 @@
             <Font name="Segoe UI Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="140.0" layoutY="234.0">
+      <TextField fx:id="txtEmail" layoutX="140.0" layoutY="234.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="140.0" layoutY="278.0">
+      <TextField fx:id="txtPhone" layoutX="140.0" layoutY="278.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="47.0" layoutY="382.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="144.0" text="ADD CLIENT">
+      <Button fx:id="btnAdd" layoutX="47.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="35.0" prefWidth="144.0" text="ADD CLIENT">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -81,7 +81,7 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" layoutX="47.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
+      <Button fx:id="btnBack" layoutX="47.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

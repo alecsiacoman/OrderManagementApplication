@@ -9,8 +9,8 @@ public class ConnectionFactory {
     private static final Logger LOGGER = Logger.getLogger(ConnectionFactory.class.getName());
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DBURL = "jdbc:mysql://localhost:3306/ordersmanagement";
-    private static final String USER = "user1";
-    private static final String PASS = "pass";
+    private static final String USER = "root";
+    private static final String PASS = "0000";
 
     private static ConnectionFactory connectionFactory = new ConnectionFactory();
 
