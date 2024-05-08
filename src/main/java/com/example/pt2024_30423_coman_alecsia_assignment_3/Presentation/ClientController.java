@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
     @FXML
-    private Button btnBack, btnAdd;
+    private Button btnBack, btnAdd, btnEdit;
     @FXML
     private TextField txtID, txtName, txtEmail, txtPhone;
 
@@ -28,38 +28,67 @@ public class ClientController implements Initializable {
     private String email;
     private String phone;
 
-    private void getData(){
-        if(!txtID.getText().isEmpty())
-            try{
-                id = Integer.parseInt(txtID.getText());
-            }catch (NumberFormatException e){
+    private void getData() throws IllegalArgumentException {
+        if (!txtID.getText().isEmpty()) {
+            try {
+                this.id = Integer.parseInt(txtID.getText());
+            } catch (NumberFormatException e) {
                 AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
+                throw new IllegalArgumentException("Incorrect ID!");
             }
-        if(!txtName.getText().isEmpty())
-            name = txtName.getText();
-        else{
-            AlertUtils.showAlert("You must introduce a name for the client!");
-            return;
         }
-        if(!txtEmail.getText().isEmpty())
-            email = txtEmail.getText();
-        else {
-            AlertUtils.showAlert("You must introduce an email for the client!");
-            return;
-        }
-        if(!txtPhone.getText().isEmpty())
-            phone = txtPhone.getText();
-        else
-            AlertUtils.showAlert("You must introduce a phone number for the client!");
-    }
 
+        if (txtName.getText().isEmpty()) {
+            AlertUtils.showAlert("You must introduce a name for the client!");
+            throw new IllegalArgumentException("Name is required!");
+        } else {
+            this.name = txtName.getText();
+        }
+
+        if (txtEmail.getText().isEmpty()) {
+            AlertUtils.showAlert("You must introduce an email for the client!");
+            throw new IllegalArgumentException("Email is required!");
+        } else {
+            this.email = txtEmail.getText();
+        }
+
+        if (txtPhone.getText().isEmpty()) {
+            AlertUtils.showAlert("You must introduce a phone number for the client!");
+            throw new IllegalArgumentException("Phone number is required!");
+        } else {
+            this.phone = txtPhone.getText();
+        }
+    }
 
     @FXML
     private void handleAddButton() {
-        getData();
+        try{getData();}catch (IllegalArgumentException e){e.printStackTrace();}
         Client client = new Client(name, email, phone);
         ClientBLL clientBLL = new ClientBLL();
         clientBLL.insertClient(client);
+    }
+
+    @FXML
+    private void handleEditButton() {
+        getData();
+        Client client = new Client(id, name, email, phone);
+        ClientBLL clientBLL = new ClientBLL();
+        clientBLL.editClient(client);
+    }
+
+    @FXML
+    private void handleDeleteButton(){
+        if (!txtID.getText().isEmpty()) {
+            try {
+                this.id = Integer.parseInt(txtID.getText());
+            } catch (NumberFormatException e) {
+                AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
+                throw new IllegalArgumentException("Incorrect ID!");
+            }
+        }
+
+        ClientBLL clientBLL = new ClientBLL();
+        clientBLL.deleteClient(id);
     }
 
     @FXML
@@ -80,6 +109,6 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-//        getData();
+
     }
 }

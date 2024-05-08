@@ -11,7 +11,9 @@ public class PhoneValidator implements Validator<Client>{
     public void validate(Client client) {
         Pattern pattern = Pattern.compile("^\\d{10}$");
         Matcher matcher = pattern.matcher(client.getPhone());
-        if(!matcher.matches())
+        if(!matcher.matches()) {
             AlertUtils.showAlert("The phone number is not valid! It should contain only numbers and have exactly 10 characters.");
+            throw new IllegalArgumentException("Invalid phone number");
+        }
     }
 }

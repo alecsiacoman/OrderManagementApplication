@@ -66,12 +66,12 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="382.0" mnemonicParsing="false" text="EDIT CLIENT">
+      <Button fx:id="btnEdit" layoutX="205.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleEditButton" text="EDIT CLIENT">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="47.0" layoutY="443.0" mnemonicParsing="false" text="DELETE CLIENT">
+      <Button fx:id="btnDelete" layoutX="47.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="DELETE CLIENT">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

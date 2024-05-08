@@ -11,6 +11,9 @@ public class ClientDAO {
     protected static final Logger LOGGER = Logger.getLogger(ClientDAO.class.getName());
     private static final String insertStatementString = "INSERT INTO client (name, email, phone)" + " VALUES (?, ?, ?)";
     private final static String findStatementString = "SELECT * from client where id = ?";
+    private static final String updateStatementString = "UPDATE client SET name = ?, email = ?, phone = ? WHERE id = ?";
+    private static final String deleteStatementString = "DELETE FROM client WHERE id = ?";
+
 
     public static Client findById(int id){
         Client client = null;
@@ -60,5 +63,53 @@ public class ClientDAO {
             ConnectionFactory.close(resultSet);
         }
         return id;
+    }
+
+    public static void update(Client client) {
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement preparedStatement = null;
+        System.out.println(client);
+
+        try {
+            preparedStatement = connection.prepareStatement(updateStatementString);
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setString(2, client.getEmail());
+            preparedStatement.setString(3, client.getPhone());
+            preparedStatement.setInt(4, client.getId());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                LOGGER.info("Client updated successfully");
+            } else {
+                LOGGER.warning("Failed to update client. No rows were affected.");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, "ClientDAO:update " + e.getMessage());
+        } finally {
+            ConnectionFactory.close(connection);
+            ConnectionFactory.close(preparedStatement);
+        }
+    }
+
+    public static void delete(int id) {
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(deleteStatementString);
+            preparedStatement.setInt(1, id);
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0) {
+                LOGGER.info("Client deleted successfully");
+            } else {
+                LOGGER.warning("Failed to delete client. No rows were affected.");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, "ClientDAO:delete " + e.getMessage());
+        } finally {
+            ConnectionFactory.close(connection);
+            ConnectionFactory.close(preparedStatement);
+        }
     }
 }

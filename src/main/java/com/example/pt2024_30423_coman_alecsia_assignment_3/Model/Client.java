@@ -12,6 +12,13 @@ public class Client {
         this.phone = phone;
     }
 
+    public Client(int id, String name, String email, String phone){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
     @Override
     public String toString(){
         return "Client [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";

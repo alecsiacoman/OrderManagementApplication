@@ -11,7 +11,10 @@ public class EmailValidator implements Validator<Client> {
     @Override
     public void validate(Client client) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        if(!pattern.matcher(client.getEmail()).matches())
+        if(!pattern.matcher(client.getEmail()).matches()){
             AlertUtils.showAlert("The email is not valid! Example: smith@example.com");
+            throw new IllegalArgumentException("Invalid email");
+        }
+
     }
 }

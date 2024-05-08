@@ -33,4 +33,14 @@ public class ClientBLL {
         return ClientDAO.insert(client);
     }
 
+    public void editClient(Client client){
+        for(Validator<Client> item : validators)
+            item.validate(client);
+        ClientDAO.update(client);
+    }
+
+    public void deleteClient(int id){
+        ClientDAO.delete(id);
+    }
+
 }
