@@ -3,12 +3,10 @@ module com.example.pt2024_30423_coman_alecsia_assignment_3 {
     requires javafx.fxml;
     requires java.sql;
 
-
-    opens com.example.pt2024_30423_coman_alecsia_assignment_3 to javafx.fxml;
-    opens com.example.pt2024_30423_coman_alecsia_assignment_3.Model to javafx.fxml;
-    opens com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic to javafx.fxml;
-    opens com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess to javafx.fxml;
     opens com.example.pt2024_30423_coman_alecsia_assignment_3.Presentation to javafx.fxml;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic to javafx.base;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess to javafx.base;
+    opens com.example.pt2024_30423_coman_alecsia_assignment_3.Model to javafx.base;
 
     exports com.example.pt2024_30423_coman_alecsia_assignment_3;
 }

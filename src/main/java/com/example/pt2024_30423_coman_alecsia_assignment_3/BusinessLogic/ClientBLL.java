@@ -43,4 +43,8 @@ public class ClientBLL {
         ClientDAO.delete(id);
     }
 
+    public List<Client> viewAllClients(){
+        return ClientDAO.viewAll();
+    }
+
 }

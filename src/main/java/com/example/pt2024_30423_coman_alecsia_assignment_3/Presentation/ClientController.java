@@ -4,17 +4,19 @@ import com.example.pt2024_30423_coman_alecsia_assignment_3.AlertUtils;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.ClientBLL;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess.ClientDAO;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -22,6 +24,16 @@ public class ClientController implements Initializable {
     private Button btnBack, btnAdd, btnEdit;
     @FXML
     private TextField txtID, txtName, txtEmail, txtPhone;
+    @FXML
+    private TableView<Client> clientTableView;
+    @FXML
+    private TableColumn<Client, Integer> idColumn;
+    @FXML
+    private TableColumn<Client, String> nameColumn;
+    @FXML
+    private TableColumn<Client, String> emailColumn;
+    @FXML
+    private TableColumn<Client, String> phoneColumn;
 
     private int id;
     private String name;
@@ -92,6 +104,15 @@ public class ClientController implements Initializable {
     }
 
     @FXML
+    private void handleViewAllButton(){
+        ClientBLL clientBLL = new ClientBLL();
+        List<Client> clients = clientBLL.viewAllClients();
+        System.out.println(clients);
+        ObservableList<Client> clientList = FXCollections.observableArrayList(clients);
+        clientTableView.setItems(clientList);
+    }
+
+    @FXML
     private void handleBackAction(ActionEvent event) throws Exception{
         Stage stage;
         Parent root;
@@ -109,6 +130,9 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-
+        idColumn.setCellValueFactory(new PropertyValueFactory<Client, Integer>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
     }
 }

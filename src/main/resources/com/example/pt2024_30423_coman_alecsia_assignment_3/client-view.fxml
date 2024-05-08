@@ -15,10 +15,12 @@
             <Font name="Segoe UI Bold" size="32.0" />
          </font>
       </Label>
-      <TableView layoutX="392.0" layoutY="97.0" prefHeight="388.0" prefWidth="349.0">
+      <TableView fx:id="clientTableView" layoutX="392.0" layoutY="97.0" prefHeight="388.0" prefWidth="349.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="idColumn" editable="false" prefWidth="35.0" text="ID" />
+          <TableColumn fx:id="nameColumn" editable="false" prefWidth="105.0" text="NAME" />
+            <TableColumn fx:id="emailColumn" editable="false" prefWidth="105.0" text="EMAIL" />
+            <TableColumn fx:id="phoneColumn" editable="false" prefWidth="105.0" text="PHONE" />
         </columns>
       </TableView>
       <Label layoutX="59.0" layoutY="144.0" text="ID:">
@@ -76,7 +78,7 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="443.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="122.0" text="VIEW ALL">
+      <Button fx:id="btnViewAll" layoutX="205.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleViewAllButton" prefHeight="35.0" prefWidth="122.0" text="VIEW ALL">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
