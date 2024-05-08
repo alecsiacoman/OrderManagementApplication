@@ -75,7 +75,7 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" layoutX="29.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
+      <Button fx:id="btnBack" layoutX="29.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

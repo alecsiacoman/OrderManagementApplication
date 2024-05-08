@@ -34,6 +34,29 @@ public abstract class AbstractDAO<T> {
         return sb.toString();
     }
 
+    public T findById(int id, String idColumnName) {
+        T entity = null;
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String selectQuery = createSelectQuery(idColumnName);
+        try {
+            preparedStatement = connection.prepareStatement(selectQuery);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                entity = mapResultSetToEntity(resultSet);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, "AbstractDAO:findById " + e.getMessage());
+        } finally {
+            ConnectionFactory.close(connection);
+            ConnectionFactory.close(preparedStatement);
+            ConnectionFactory.close(resultSet);
+        }
+        return entity;
+    }
+
     public void insert(T entity){
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = null;

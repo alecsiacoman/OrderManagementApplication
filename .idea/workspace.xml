@@ -6,12 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="02ce4fcb-8ed6-4e1d-bc57-4f098efebece" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/OrderBLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/OrderBLL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/ProductBLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/BusinessLogic/ProductBLL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/AbstractDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/AbstractDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/ClientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/ClientDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/OrderDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/DataAccess/ProductDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Model/Orders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Presentation/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Presentation/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Presentation/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Presentation/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Presentation/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pt2024_30423_coman_alecsia_assignment_3/Presentation/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/order-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/order-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/product-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/pt2024_30423_coman_alecsia_assignment_3/product-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +85,7 @@
       <workItem from="1714305574200" duration="6658000" />
       <workItem from="1714751552559" duration="8814000" />
       <workItem from="1715147313795" duration="6424000" />
-      <workItem from="1715184905614" duration="2589000" />
+      <workItem from="1715184905614" duration="9261000" />
     </task>
     <servers />
   </component>

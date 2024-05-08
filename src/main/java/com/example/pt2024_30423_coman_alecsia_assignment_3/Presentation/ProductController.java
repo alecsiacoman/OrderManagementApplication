@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
     @FXML
-    private Button btnBack, btnAdd, btnEdit;
+    private Button btnBack;
     @FXML
     private TextField txtID, txtName, txtPrice, txtQuantity;
     @FXML
@@ -116,22 +116,6 @@ public class ProductController implements Initializable {
 
     @FXML
     private void handleBackAction(ActionEvent event) throws Exception{
-        Stage stage;
-        Parent root;
-        if(event.getSource() == btnBack){
-            stage = (Stage) btnBack.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/main-view.fxml"));
-        }
-        else{
-            return;
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) throws Exception{
         Stage stage;
         Parent root;
         if(event.getSource() == btnBack){

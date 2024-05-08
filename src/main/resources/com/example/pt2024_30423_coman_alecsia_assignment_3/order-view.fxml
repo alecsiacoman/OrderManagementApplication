@@ -9,19 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="783.0" style="-fx-background-color: #7B9EA8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Order">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="783.0" style="-fx-background-color: #7B9EA8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pt2024_30423_coman_alecsia_assignment_3.Presentation.OrderController">
    <children>
       <Label layoutX="218.0" layoutY="29.0" text="ORDER MANAGEMENT">
          <font>
             <Font name="Segoe UI Bold" size="32.0" />
          </font>
       </Label>
-      <TableView layoutX="392.0" layoutY="97.0" prefHeight="388.0" prefWidth="349.0">
-         <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
-         </columns>
-      </TableView>
       <Label layoutX="59.0" layoutY="144.0" text="ID:">
          <font>
             <Font name="Segoe UI Bold Italic" size="20.0" />
@@ -32,7 +26,7 @@
             <Font name="Segoe UI Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="173.0" layoutY="144.0">
+      <TextField fx:id="txtID" layoutX="173.0" layoutY="144.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
@@ -47,37 +41,45 @@
             <Font name="Segoe UI Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="173.0" layoutY="278.0">
+      <TextField fx:id="txtQuantity" layoutX="173.0" layoutY="278.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="55.0" layoutY="382.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="144.0" text="ADD ORDER">
+      <Button fx:id="btnAdd" layoutX="55.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="35.0" prefWidth="144.0" text="ADD ORDER">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="55.0" layoutY="443.0" mnemonicParsing="false" text="DELETE ORDER">
+      <Button fx:id="btnDelete" layoutX="55.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="DELETE ORDER">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="216.0" layoutY="382.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="144.0" text="EDIT ORDER">
+      <Button fx:id="btnEdit" layoutX="216.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="35.0" prefWidth="144.0" text="EDIT ORDER">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="216.0" layoutY="443.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="144.0" text="VIEW ALL">
+      <Button fx:id="btnViewAll" layoutX="216.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleViewAllButton" prefHeight="35.0" prefWidth="144.0" text="VIEW ALL">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <ComboBox layoutX="173.0" layoutY="188.0" prefHeight="25.0" prefWidth="187.0" />
-      <ComboBox layoutX="173.0" layoutY="234.0" prefHeight="25.0" prefWidth="187.0" />
-      <Button fx:id="btnBack" layoutX="50.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
+      <ComboBox fx:id="cmbClient" layoutX="173.0" layoutY="188.0" prefHeight="25.0" prefWidth="187.0" />
+      <ComboBox fx:id="cmbProduct" layoutX="173.0" layoutY="234.0" prefHeight="25.0" prefWidth="187.0" />
+      <Button fx:id="btnBack" layoutX="50.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="35.0" prefWidth="79.0" text="BACK">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
+      <TableView fx:id="orderTableView" layoutX="392.0" layoutY="99.0" prefHeight="388.0" prefWidth="349.0">
+         <columns>
+            <TableColumn fx:id="idColumn" editable="false" prefWidth="35.0" text="ID" />
+            <TableColumn fx:id="clientColumn" editable="false" prefWidth="105.0" text="CLIENT" />
+            <TableColumn fx:id="productColumn" editable="false" prefWidth="105.0" text="PRODUCT" />
+            <TableColumn fx:id="quantityColumn" editable="false" prefWidth="105.0" text="QUANTITY" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

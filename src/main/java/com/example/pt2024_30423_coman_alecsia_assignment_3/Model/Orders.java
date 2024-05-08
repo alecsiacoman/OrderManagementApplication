@@ -1,12 +1,19 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.Model;
 
-public class Order {
+public class Orders {
     private int id;
     private int clientId;
     private int productId;
     private int quantity;
 
-    public Order(int clientId, int productId, int quantity){
+    public Orders(int clientId, int productId, int quantity){
+        this.clientId = clientId;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
+    public Orders(int id, int clientId, int productId, int quantity){
+        this.id = id;
         this.clientId = clientId;
         this.productId = productId;
         this.quantity = quantity;

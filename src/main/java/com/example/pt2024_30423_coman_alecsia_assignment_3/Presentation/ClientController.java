@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
     @FXML
-    private Button btnBack, btnAdd, btnEdit;
+    private Button btnBack;
     @FXML
     private TextField txtID, txtName, txtEmail, txtPhone;
     @FXML
