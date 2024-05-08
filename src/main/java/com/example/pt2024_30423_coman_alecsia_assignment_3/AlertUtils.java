@@ -9,4 +9,11 @@ public class AlertUtils {
         alert.setHeaderText(message);
         alert.showAndWait();
     }
+
+    public static void showMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Action succeeded!");
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
 }

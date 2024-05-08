@@ -12,11 +12,14 @@ import java.util.NoSuchElementException;
 
 public class ClientBLL {
     private List<Validator<Client>> validators;
+    private ClientDAO clientDAO;
 
     public ClientBLL(){
         validators = new ArrayList<Validator<Client>>();
         validators.add(new EmailValidator());
         validators.add(new PhoneValidator());
+
+        clientDAO = new ClientDAO();
     }
 
     public Client findClientById(int id){
@@ -27,24 +30,24 @@ public class ClientBLL {
         return client;
     }
 
-    public int insertClient(Client client){
+    public void insertClient(Client client){
         for(Validator<Client> item : validators)
             item.validate(client);
-        return ClientDAO.insert(client);
+        clientDAO.insert(client);
     }
 
     public void editClient(Client client){
         for(Validator<Client> item : validators)
             item.validate(client);
-        ClientDAO.update(client);
+        clientDAO.edit(client, "id");
     }
 
     public void deleteClient(int id){
-        ClientDAO.delete(id);
+        clientDAO.delete(id, "id");
     }
 
     public List<Client> viewAllClients(){
-        return ClientDAO.viewAll();
+        return clientDAO.viewAll();
     }
 
 }

@@ -40,6 +40,8 @@ public class ClientController implements Initializable {
     private String email;
     private String phone;
 
+    private ClientBLL clientBLL;
+
     private void getData() throws IllegalArgumentException {
         if (!txtID.getText().isEmpty()) {
             try {
@@ -76,7 +78,6 @@ public class ClientController implements Initializable {
     private void handleAddButton() {
         try{getData();}catch (IllegalArgumentException e){e.printStackTrace();}
         Client client = new Client(name, email, phone);
-        ClientBLL clientBLL = new ClientBLL();
         clientBLL.insertClient(client);
     }
 
@@ -84,7 +85,6 @@ public class ClientController implements Initializable {
     private void handleEditButton() {
         getData();
         Client client = new Client(id, name, email, phone);
-        ClientBLL clientBLL = new ClientBLL();
         clientBLL.editClient(client);
     }
 
@@ -99,15 +99,12 @@ public class ClientController implements Initializable {
             }
         }
 
-        ClientBLL clientBLL = new ClientBLL();
         clientBLL.deleteClient(id);
     }
 
     @FXML
     private void handleViewAllButton(){
-        ClientBLL clientBLL = new ClientBLL();
         List<Client> clients = clientBLL.viewAllClients();
-        System.out.println(clients);
         ObservableList<Client> clientList = FXCollections.observableArrayList(clients);
         clientTableView.setItems(clientList);
     }
@@ -130,6 +127,8 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        clientBLL = new ClientBLL();
+
         idColumn.setCellValueFactory(new PropertyValueFactory<Client, Integer>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
