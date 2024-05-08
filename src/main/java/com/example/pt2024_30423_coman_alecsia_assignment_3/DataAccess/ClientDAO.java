@@ -15,7 +15,6 @@ public class ClientDAO extends AbstractDAO<Client> {
     private static final String deleteStatementString = "DELETE FROM client WHERE id = ?";
     private static final String viewAllStatementString = "SELECT * FROM client";
 
-
     public static Client findById(int id){
         Client client = null;
         Connection connection = ConnectionFactory.getConnection();

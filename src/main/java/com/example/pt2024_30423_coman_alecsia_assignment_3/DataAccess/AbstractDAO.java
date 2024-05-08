@@ -1,5 +1,6 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess;
 
+import com.example.pt2024_30423_coman_alecsia_assignment_3.AlertUtils;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Connection.ConnectionFactory;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
 
@@ -58,8 +59,10 @@ public abstract class AbstractDAO<T> {
                 preparedStatement.setObject(parameterIndex++, value);
             }
             preparedStatement.executeUpdate();
+            AlertUtils.showMessage(tableName + " added successfully!");
         } catch (SQLException | IllegalAccessException e){
             e.printStackTrace();
+            AlertUtils.showAlert("Failed to add " + tableName + ". No rows were affected.");
         } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
@@ -94,8 +97,10 @@ public abstract class AbstractDAO<T> {
             }
             preparedStatement.executeUpdate();
             LOGGER.info(tableName + " updated successfully");
-        } catch (SQLException | IllegalAccessException e) {
+            AlertUtils.showMessage(tableName + " updated successfully");
+      } catch (SQLException | IllegalAccessException e) {
             LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
+            AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
         } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
@@ -113,8 +118,10 @@ public abstract class AbstractDAO<T> {
             int rowsDeleted = preparedStatement.executeUpdate();
             if (rowsDeleted > 0) {
                 LOGGER.info(tableName + " deleted successfully");
+                AlertUtils.showMessage(tableName + " deleted successfully");
             } else {
                 LOGGER.warning("Failed to delete " + tableName + ". No rows were affected.");
+                AlertUtils.showAlert("Failed to delete " + tableName + ". No rows were affected.");
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, "AbstractDAO:delete " + e.getMessage());

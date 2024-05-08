@@ -15,12 +15,6 @@
             <Font name="Segoe UI Bold" size="32.0" />
          </font>
       </Label>
-      <TableView layoutX="392.0" layoutY="97.0" prefHeight="388.0" prefWidth="349.0">
-         <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
-         </columns>
-      </TableView>
       <Label layoutX="59.0" layoutY="144.0" text="ID:">
          <font>
             <Font name="Segoe UI Bold Italic" size="20.0" />
@@ -31,12 +25,12 @@
             <Font name="Segoe UI Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="156.0" layoutY="144.0">
+      <TextField fx:id="txtID" layoutX="156.0" layoutY="144.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="156.0" layoutY="188.0">
+      <TextField fx:id="txtName" layoutX="156.0" layoutY="188.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
@@ -51,32 +45,32 @@
             <Font name="Segoe UI Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="156.0" layoutY="234.0">
+      <TextField fx:id="txtPrice" layoutX="156.0" layoutY="234.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="156.0" layoutY="278.0">
+      <TextField fx:id="txtQuantity" layoutX="156.0" layoutY="278.0">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="29.0" layoutY="382.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="167.0" text="ADD PRODUCT">
+      <Button fx:id="btnAdd" layoutX="29.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="35.0" prefWidth="167.0" text="ADD PRODUCT">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="382.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="167.0" text="EDIT PRODUCT">
+      <Button fx:id="btnEdit" layoutX="205.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="35.0" prefWidth="167.0" text="EDIT PRODUCT">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="29.0" layoutY="435.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="167.0" text="DELETE PRODUCT">
+      <Button fx:id="btnDelete" layoutX="29.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="35.0" prefWidth="167.0" text="DELETE PRODUCT">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="435.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="167.0" text="VIEW ALL">
+      <Button fx:id="btnViewAll" layoutX="205.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleViewAllButton" prefHeight="35.0" prefWidth="167.0" text="VIEW ALL">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -86,5 +80,13 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
+      <TableView fx:id="productTableView" layoutX="392.0" layoutY="96.0" prefHeight="388.0" prefWidth="349.0">
+         <columns>
+            <TableColumn fx:id="idColumn" editable="false" prefWidth="35.0" text="ID" />
+            <TableColumn fx:id="nameColumn" editable="false" prefWidth="105.0" text="NAME" />
+            <TableColumn fx:id="priceColumn" editable="false" prefWidth="105.0" text="PRICE" />
+            <TableColumn fx:id="quantityColumn" editable="false" prefWidth="105.0" text="QUANTITY" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>
