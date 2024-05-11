@@ -1,5 +1,6 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess;
 
+import com.example.pt2024_30423_coman_alecsia_assignment_3.AlertUtils;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Connection.ConnectionFactory;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
 
@@ -9,11 +10,7 @@ import java.util.logging.Logger;
 
 public class ClientDAO extends AbstractDAO<Client> {
     protected static final Logger LOGGER = Logger.getLogger(ClientDAO.class.getName());
-    private static final String insertStatementString = "INSERT INTO client (name, email, phone)" + " VALUES (?, ?, ?)";
     private final static String findStatementString = "SELECT * from client where id = ?";
-    private static final String updateStatementString = "UPDATE client SET name = ?, email = ?, phone = ? WHERE id = ?";
-    private static final String deleteStatementString = "DELETE FROM client WHERE id = ?";
-    private static final String viewAllStatementString = "SELECT * FROM client";
 
     public static Client findById(int id){
         Client client = null;

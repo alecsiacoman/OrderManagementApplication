@@ -60,31 +60,6 @@ public class OrderController implements Initializable, TableColumnGenerator {
         }
     }
 
-    private void manageQuantity(int action){
-        ProductBLL productBLL = new ProductBLL();
-        Product product1 = productBLL.findProductById(product);
-        int currentQuantity = product1.getQuantity();
-        Orders orders;
-
-        if(currentQuantity - quantity >= 0){
-            if(action == 0) // insert
-            {
-                orders = new Orders(client, product, quantity);
-                orderBLL.insertOrder(orders);
-            }
-            else //edit
-            {
-                orders = new Orders(id, client, product, quantity);
-                orderBLL.editOrder(orders);
-            }
-            product1.setQuantity(currentQuantity - quantity);
-            productBLL.editProduct(product1);
-        }
-        else {
-            AlertUtils.showAlert("Not enough quantity of chosen product!");
-        }
-    }
-
     @FXML
     private void handleAddButton() {
         try{
@@ -92,7 +67,8 @@ public class OrderController implements Initializable, TableColumnGenerator {
         }catch (IllegalArgumentException e){
             e.printStackTrace();
         }
-        manageQuantity(0);
+        Orders order = new Orders(client, product, quantity);
+        orderBLL.insertOrder(order);
     }
 
     @FXML
@@ -102,7 +78,8 @@ public class OrderController implements Initializable, TableColumnGenerator {
         }catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        manageQuantity(1);
+        Orders orders = new Orders(id, client, product, quantity);
+        orderBLL.editOrder(orders);
     }
 
     @FXML

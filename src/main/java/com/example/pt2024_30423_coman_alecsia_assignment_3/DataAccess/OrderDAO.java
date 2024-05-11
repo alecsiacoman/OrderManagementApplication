@@ -3,6 +3,7 @@ package com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.AlertUtils;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Connection.ConnectionFactory;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Orders;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Product;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class OrderDAO extends AbstractDAO<Orders> {
     @Override
@@ -21,6 +23,99 @@ public class OrderDAO extends AbstractDAO<Orders> {
         int quantity =  resultSet.getInt("quantity");
 
         return new Orders(id, clientId, productId, quantity);
+    }
+
+    private boolean verify(Orders order){
+        ProductDAO productDAO = new ProductDAO();
+        Product product = productDAO.findById(order.getProductId(), "id");
+        int finalQuantity = product.getQuantity() - order.getQuantity();
+        if(finalQuantity > 0){
+            product.setQuantity(finalQuantity);
+            productDAO.edit(product, "id");
+            return true;
+        }
+        if(finalQuantity == 0){
+            productDAO.delete(product.getId(), "id");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void insert(Orders entity){
+        if(verify(entity)) {
+            Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement preparedStatement = null;
+            StringBuilder insertQuery = new StringBuilder("INSERT INTO orders (");
+            StringBuilder values = new StringBuilder(") VALUES (");
+            try {
+                Field[] fields = Orders.class.getDeclaredFields();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    String fieldName = field.getName();
+                    insertQuery.append(fieldName).append(",");
+                    values.append("?,");
+                }
+
+                insertQuery.deleteCharAt(insertQuery.length() - 1).append(values.deleteCharAt(values.length() - 1)).append(")");
+                preparedStatement = connection.prepareStatement(insertQuery.toString());
+                int parameterIndex = 1;
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    Object value = field.get(entity);
+                    preparedStatement.setObject(parameterIndex++, value);
+                }
+                preparedStatement.executeUpdate();
+                AlertUtils.showMessage("Order added successfully!");
+            } catch (SQLException | IllegalAccessException e) {
+                e.printStackTrace();
+                AlertUtils.showAlert("Failed to add order. No rows were affected.");
+            } finally {
+                ConnectionFactory.close(connection);
+                ConnectionFactory.close(preparedStatement);
+            }
+        }
+    }
+
+    @Override
+    public void edit(Orders entity, String idColumnName) {
+        if(verify(entity)) {
+            Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement preparedStatement = null;
+            String tableName = Orders.class.getSimpleName();
+            StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
+
+            try {
+                Field[] fields = Orders.class.getDeclaredFields();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    String fieldName = field.getName();
+                    if (!fieldName.equals(idColumnName)) {
+                        updateQuery.append(fieldName).append(" = ?,");
+                    }
+                }
+                updateQuery.deleteCharAt(updateQuery.length() - 1).append(" WHERE ").append(idColumnName).append(" = ?");
+                preparedStatement = connection.prepareStatement(updateQuery.toString());
+                int parameterIndex = 1;
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    Object value = field.get(entity);
+                    if (field.getName().equals(idColumnName))
+                        preparedStatement.setObject(fields.length, value);
+                    else
+                        preparedStatement.setObject(parameterIndex++, value);
+                }
+                preparedStatement.executeUpdate();
+                LOGGER.info(tableName + " updated successfully");
+                AlertUtils.showMessage(tableName + " updated successfully");
+            } catch (SQLException | IllegalAccessException e) {
+                LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
+                AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
+            } finally {
+                ConnectionFactory.close(connection);
+                ConnectionFactory.close(preparedStatement);
+            }
+        }
     }
 
     public static List<Integer> getClientIds() {

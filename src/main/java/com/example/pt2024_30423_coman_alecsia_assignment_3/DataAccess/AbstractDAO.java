@@ -3,6 +3,7 @@ package com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.AlertUtils;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Connection.ConnectionFactory;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Product;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -131,23 +132,50 @@ public abstract class AbstractDAO<T> {
     }
 
     public void delete(int id, String idColumnName) {
+        String tableName = type.getSimpleName();
+        if(findById(id, "id") != null) {
+            if (type == Client.class) {
+                deleteClientOrProduct("clientId", id);
+            } else if (type == Product.class) {
+                deleteClientOrProduct("productId", id);
+            }
+            Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement preparedStatement = null;
+            String deleteQuery = "DELETE FROM " + tableName + " WHERE " + idColumnName + "=?";
+            try {
+                preparedStatement = connection.prepareStatement(deleteQuery);
+                preparedStatement.setInt(1, id);
+                int rowsDeleted = preparedStatement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    LOGGER.info(tableName + " deleted successfully");
+                    AlertUtils.showMessage(tableName + " deleted successfully");
+                } else {
+                    LOGGER.warning("Failed to delete " + tableName + ". No rows were affected.");
+                    AlertUtils.showAlert("Failed to delete " + tableName + ". No rows were affected.");
+                }
+
+            } catch (SQLException e) {
+                LOGGER.log(Level.WARNING, "AbstractDAO:delete " + e.getMessage());
+            } finally {
+                ConnectionFactory.close(connection);
+                ConnectionFactory.close(preparedStatement);
+            }
+        } else { AlertUtils.showAlert("Inexistent " + tableName + "!");}
+    }
+
+    private void deleteClientOrProduct(String columnName, int id){
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = null;
-        String tableName = type.getSimpleName();
-        String deleteQuery = "DELETE FROM " + tableName + " WHERE " + idColumnName + "=?";
-        try {
-            preparedStatement = connection.prepareStatement(deleteQuery);
+        String deleteStatement = "DELETE FROM orders WHERE " + columnName + " = ?";
+        try{
+            preparedStatement = connection.prepareStatement(deleteStatement);
             preparedStatement.setInt(1, id);
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0) {
-                LOGGER.info(tableName + " deleted successfully");
-                AlertUtils.showMessage(tableName + " deleted successfully");
-            } else {
-                LOGGER.warning("Failed to delete " + tableName + ". No rows were affected.");
-                AlertUtils.showAlert("Failed to delete " + tableName + ". No rows were affected.");
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if(rowsUpdated > 0){
+                AlertUtils.showMessage("Orders deleted successfully");
             }
-        } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, "AbstractDAO:delete " + e.getMessage());
+        } catch (SQLException e){
+            AlertUtils.showAlert("Failed to delete orders. No rows were affected.");
         } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
@@ -166,7 +194,7 @@ public abstract class AbstractDAO<T> {
             preparedStatement = connection.prepareStatement(selectAllQuery);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                T entity = mapResultSetToEntity(resultSet);
+                T entity = mapResultSetToEntity(resultSet); //to create an object with the data from the result set
                 entities.add(entity);
             }
         } catch (SQLException e) {
@@ -180,6 +208,4 @@ public abstract class AbstractDAO<T> {
     }
 
     protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
-
-
 }
