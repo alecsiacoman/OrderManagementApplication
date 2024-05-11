@@ -29,26 +29,30 @@ public class OrderDAO extends AbstractDAO<Orders> {
         ProductDAO productDAO = new ProductDAO();
         Product product = productDAO.findById(order.getProductId(), "id");
         int finalQuantity = product.getQuantity() - order.getQuantity();
+
+        if(finalQuantity < 0){
+            throw new IllegalArgumentException();
+        }
+
         if(finalQuantity > 0){
             product.setQuantity(finalQuantity);
             productDAO.edit(product, "id");
             return true;
         }
-        if(finalQuantity == 0){
-            productDAO.delete(product.getId(), "id");
-            return true;
-        }
-        return false;
+
+        productDAO.delete(product.getId(), "id");
+        return true;
     }
 
     @Override
     public void insert(Orders entity){
-        if(verify(entity)) {
-            Connection connection = ConnectionFactory.getConnection();
-            PreparedStatement preparedStatement = null;
-            StringBuilder insertQuery = new StringBuilder("INSERT INTO orders (");
-            StringBuilder values = new StringBuilder(") VALUES (");
-            try {
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            if(verify(entity)) {
+                StringBuilder insertQuery = new StringBuilder("INSERT INTO orders (");
+                StringBuilder values = new StringBuilder(") VALUES (");
+
                 Field[] fields = Orders.class.getDeclaredFields();
                 for (Field field : fields) {
                     field.setAccessible(true);
@@ -67,25 +71,26 @@ public class OrderDAO extends AbstractDAO<Orders> {
                 }
                 preparedStatement.executeUpdate();
                 AlertUtils.showMessage("Order added successfully!");
-            } catch (SQLException | IllegalAccessException e) {
-                e.printStackTrace();
-                AlertUtils.showAlert("Failed to add order. No rows were affected.");
-            } finally {
-                ConnectionFactory.close(connection);
-                ConnectionFactory.close(preparedStatement);
             }
+        } catch (SQLException | IllegalAccessException e) {
+            AlertUtils.showAlert("Failed to add order. No rows were affected.");
+        } catch (IllegalArgumentException e){
+            AlertUtils.showAlert("Not enough stock!");
+        } finally {
+            ConnectionFactory.close(connection);
+            ConnectionFactory.close(preparedStatement);
         }
     }
 
     @Override
     public void edit(Orders entity, String idColumnName) {
-        if(verify(entity)) {
-            Connection connection = ConnectionFactory.getConnection();
-            PreparedStatement preparedStatement = null;
-            String tableName = Orders.class.getSimpleName();
-            StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement preparedStatement = null;
+        String tableName = Orders.class.getSimpleName();
+        try {
+            if(verify(entity)) {
+                StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
 
-            try {
                 Field[] fields = Orders.class.getDeclaredFields();
                 for (Field field : fields) {
                     field.setAccessible(true);
@@ -108,13 +113,16 @@ public class OrderDAO extends AbstractDAO<Orders> {
                 preparedStatement.executeUpdate();
                 LOGGER.info(tableName + " updated successfully");
                 AlertUtils.showMessage(tableName + " updated successfully");
-            } catch (SQLException | IllegalAccessException e) {
-                LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
-                AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
-            } finally {
-                ConnectionFactory.close(connection);
-                ConnectionFactory.close(preparedStatement);
+
             }
+        } catch (SQLException | IllegalAccessException e) {
+            LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
+            AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
+        } catch (IllegalArgumentException e){
+            AlertUtils.showAlert("Not enough stock!");
+        } finally {
+            ConnectionFactory.close(connection);
+            ConnectionFactory.close(preparedStatement);
         }
     }
 

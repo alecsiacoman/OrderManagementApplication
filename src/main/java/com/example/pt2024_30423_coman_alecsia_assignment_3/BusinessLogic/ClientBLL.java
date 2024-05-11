@@ -14,14 +14,6 @@ public class ClientBLL {
         clientDAO = new ClientDAO();
     }
 
-    public Client findClientById(int id){
-        Client client = ClientDAO.findById(id);
-        if(client == null){
-            throw new NoSuchElementException("The client with id = " + id + " doesn't exist!");
-        }
-        return client;
-    }
-
     public void insertClient(Client client){
         new ClientValidator().validate(client);
         clientDAO.insert(client);
