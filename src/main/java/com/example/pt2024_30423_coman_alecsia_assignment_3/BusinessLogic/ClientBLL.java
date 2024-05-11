@@ -1,24 +1,16 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic;
 
-import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.EmailValidator;
-import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.PhoneValidator;
-import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.Validator;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.ClientValidator;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess.ClientDAO;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ClientBLL {
-    private List<Validator<Client>> validators;
     private ClientDAO clientDAO;
 
     public ClientBLL(){
-        validators = new ArrayList<Validator<Client>>();
-        validators.add(new EmailValidator());
-        validators.add(new PhoneValidator());
-
         clientDAO = new ClientDAO();
     }
 
@@ -31,14 +23,12 @@ public class ClientBLL {
     }
 
     public void insertClient(Client client){
-        for(Validator<Client> item : validators)
-            item.validate(client);
+        new ClientValidator().validate(client);
         clientDAO.insert(client);
     }
 
     public void editClient(Client client){
-        for(Validator<Client> item : validators)
-            item.validate(client);
+        new ClientValidator().validate(client);
         clientDAO.edit(client, "id");
     }
 

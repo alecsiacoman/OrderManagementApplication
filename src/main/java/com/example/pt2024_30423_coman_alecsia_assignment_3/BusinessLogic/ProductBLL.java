@@ -1,4 +1,5 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.Validator.ProductValidator;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess.ClientDAO;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.DataAccess.ProductDAO;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
@@ -7,7 +8,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ProductBLL {
-   // private List<Validator<Product>> validators;
     private ProductDAO productDAO;
 
     public ProductBLL(){
@@ -23,14 +23,12 @@ public class ProductBLL {
     }
 
     public void insertProduct(Product product){
-//        for(Validator<Product> item : validators)
-//            item.validate(product);
+        new ProductValidator().validate(product);
         productDAO.insert(product);
     }
 
     public void editProduct(Product product){
-//        for(Validator<Product> item : validators)
-//            item.validate(product);
+        new ProductValidator().validate(product);
         productDAO.edit(product, "id");
     }
 

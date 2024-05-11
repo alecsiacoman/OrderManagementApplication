@@ -42,7 +42,7 @@ public class ClientController implements Initializable, TableColumnGenerator {
                 this.id = Integer.parseInt(txtID.getText());
             } catch (NumberFormatException e) {
                 AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Incorrect ID!");
+                throw new IllegalArgumentException("Invalid ID!");
             }
         }
 
@@ -70,7 +70,7 @@ public class ClientController implements Initializable, TableColumnGenerator {
 
     @FXML
     private void handleAddButton() {
-        try{getData();}catch (IllegalArgumentException e){e.printStackTrace();}
+        try{ getData();}catch (IllegalArgumentException e){e.printStackTrace();}
         Client client = new Client(name, email, phone);
         clientBLL.insertClient(client);
     }

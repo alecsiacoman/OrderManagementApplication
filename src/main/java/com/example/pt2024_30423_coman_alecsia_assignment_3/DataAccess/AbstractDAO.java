@@ -97,10 +97,21 @@ public abstract class AbstractDAO<T> {
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = null;
         String tableName = type.getSimpleName();
-        StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
 
         try {
+            Field idField = type.getDeclaredField(idColumnName);
+            idField.setAccessible(true);
+            Object idValue = idField.get(entity);
+
+            if (findById((int) idValue, idColumnName) == null) {
+                AlertUtils.showAlert("The " + tableName + " with ID " + idValue + " does not exist.");
+                return;
+            }
+
+            StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
             Field[] fields = type.getDeclaredFields();
+
+            // Construct the UPDATE query
             for (Field field : fields) {
                 field.setAccessible(true);
                 String fieldName = field.getName();
@@ -108,21 +119,30 @@ public abstract class AbstractDAO<T> {
                     updateQuery.append(fieldName).append(" = ?,");
                 }
             }
+
             updateQuery.deleteCharAt(updateQuery.length() - 1).append(" WHERE ").append(idColumnName).append(" = ?");
             preparedStatement = connection.prepareStatement(updateQuery.toString());
+
             int parameterIndex = 1;
             for (Field field : fields) {
                 field.setAccessible(true);
                 Object value = field.get(entity);
-                if(field.getName().equals(idColumnName))
+                if(field.getName().equals(idColumnName)) {
                     preparedStatement.setObject(fields.length, value);
-                else
+                } else {
                     preparedStatement.setObject(parameterIndex++, value);
+                }
             }
-            preparedStatement.executeUpdate();
-            LOGGER.info(tableName + " updated successfully");
-            AlertUtils.showMessage(tableName + " updated successfully");
-      } catch (SQLException | IllegalAccessException e) {
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                LOGGER.info(tableName + " updated successfully");
+                AlertUtils.showMessage(tableName + " updated successfully");
+            } else {
+                LOGGER.warning("Failed to update " + tableName + ". No rows were affected.");
+                AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
+            }
+        } catch (SQLException | IllegalAccessException | NoSuchFieldException e) {
             LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
             AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
         } finally {
@@ -130,6 +150,7 @@ public abstract class AbstractDAO<T> {
             ConnectionFactory.close(preparedStatement);
         }
     }
+
 
     public void delete(int id, String idColumnName) {
         String tableName = type.getSimpleName();
