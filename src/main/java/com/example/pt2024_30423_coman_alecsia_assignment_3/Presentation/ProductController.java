@@ -24,21 +24,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ProductController implements Initializable {
+public class ProductController implements Initializable, TableColumnGenerator {
     @FXML
     private Button btnBack;
     @FXML
     private TextField txtID, txtName, txtPrice, txtQuantity;
     @FXML
     private TableView<Product> productTableView;
-    @FXML
-    private TableColumn<Product, Integer> idColumn;
-    @FXML
-    private TableColumn<Product, String> nameColumn;
-    @FXML
-    private TableColumn<Product, Double> priceColumn;
-    @FXML
-    private TableColumn<Product, Integer> quantityColumn;
 
     private int id;
     private String name;
@@ -133,10 +125,7 @@ public class ProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         productBLL = new ProductBLL();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
+        generateTableColumns(Product.class, productTableView);
+        handleViewAllButton();
     }
 }

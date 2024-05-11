@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class OrderController implements Initializable {
+public class OrderController implements Initializable, TableColumnGenerator {
     @FXML
     private Button btnBack;
     @FXML
@@ -31,14 +31,6 @@ public class OrderController implements Initializable {
     private ComboBox<Integer> cmbClient, cmbProduct;
     @FXML
     private TableView<Orders> orderTableView;
-    @FXML
-    private TableColumn<Orders, Integer> idColumn;
-    @FXML
-    private TableColumn<Orders, Integer> clientColumn;
-    @FXML
-    private TableColumn<Orders, Integer> productColumn;
-    @FXML
-    private TableColumn<Orders, Integer> quantityColumn;
 
     private int id;
     private int client;
@@ -154,11 +146,8 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         orderBLL = new OrderBLL();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("id"));
-        clientColumn.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("clientId"));
-        productColumn.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("productId"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<Orders, Integer>("quantity"));
+        generateTableColumns(Orders.class, orderTableView);
+        handleViewAllButton();
 
         List<Integer> clientIds = OrderDAO.getClientIds();
         ObservableList<Integer> clientIdsObservable = FXCollections.observableArrayList(clientIds);

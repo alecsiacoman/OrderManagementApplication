@@ -15,25 +15,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientController implements Initializable {
+public class ClientController implements Initializable, TableColumnGenerator {
     @FXML
     private Button btnBack;
     @FXML
     private TextField txtID, txtName, txtEmail, txtPhone;
     @FXML
     private TableView<Client> clientTableView;
-    @FXML
-    private TableColumn<Client, Integer> idColumn;
-    @FXML
-    private TableColumn<Client, String> nameColumn;
-    @FXML
-    private TableColumn<Client, String> emailColumn;
-    @FXML
-    private TableColumn<Client, String> phoneColumn;
 
     private int id;
     private String name;
@@ -128,10 +122,7 @@ public class ClientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         clientBLL = new ClientBLL();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<Client, Integer>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
+        generateTableColumns(Client.class, clientTableView);
+        handleViewAllButton();
     }
 }
