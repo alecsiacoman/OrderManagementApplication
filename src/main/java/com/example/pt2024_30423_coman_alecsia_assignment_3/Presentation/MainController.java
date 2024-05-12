@@ -1,5 +1,9 @@
 package com.example.pt2024_30423_coman_alecsia_assignment_3.Presentation;
 
+import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.ClientBLL;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.OrderBLL;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.BusinessLogic.ProductBLL;
+import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Bill;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     @FXML
-    private Button btnClient, btnProduct, btnOrder, btnBills;
+    private Button btnClient, btnProduct, btnOrder, btnGetBill;
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception{
@@ -32,8 +36,10 @@ public class MainController implements Initializable {
                 stage = (Stage) btnOrder.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/order-view.fxml"));
             } else {
-                stage = (Stage) btnBills.getScene().getWindow();
-                root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/bills-view.fxml"));
+                Bill bill = new Bill(new ClientBLL(), new ProductBLL(), new OrderBLL());
+                bill.makeBill();
+                stage = (Stage) btnGetBill.getScene().getWindow();
+                root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/main-view.fxml"));
             }
         }
         Scene scene = new Scene(root);

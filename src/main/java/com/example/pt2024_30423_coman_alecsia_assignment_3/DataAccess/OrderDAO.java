@@ -72,7 +72,6 @@ public class OrderDAO extends AbstractDAO<Orders> {
                 }
                 preparedStatement.executeUpdate();
                 AlertUtils.showMessage("Order added successfully!");
-                createBill(entity);
             }
         } catch (SQLException | IllegalAccessException e) {
             AlertUtils.showAlert("Failed to add order. No rows were affected.");
@@ -82,15 +81,6 @@ public class OrderDAO extends AbstractDAO<Orders> {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
         }
-    }
-
-    private void createBill(Orders order){
-        BillDAO billDAO = new BillDAO();
-        int id = order.getId();
-        double productPrice = ProductDAO.findById(order.getProductId()).getPrice();
-        double totalPrice = order.getQuantity() * productPrice;
-        Bill bill = new Bill(id, totalPrice);
-        billDAO.insert(bill);
     }
 
     @Override

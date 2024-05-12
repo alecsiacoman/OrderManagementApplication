@@ -13,6 +13,10 @@ public class ClientBLL {
     public ClientBLL(){
         clientDAO = new ClientDAO();
     }
+    
+    public Client findClient(int id){
+        return clientDAO.findById(id, "id");
+    }
 
     public void insertClient(Client client){
         new ClientValidator().validate(client);
