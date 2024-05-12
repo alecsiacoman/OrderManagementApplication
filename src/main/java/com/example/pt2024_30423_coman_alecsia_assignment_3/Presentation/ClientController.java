@@ -70,16 +70,20 @@ public class ClientController implements Initializable, TableColumnGenerator {
 
     @FXML
     private void handleAddButton() {
-        try{ getData();}catch (IllegalArgumentException e){e.printStackTrace();}
-        Client client = new Client(name, email, phone);
-        clientBLL.insertClient(client);
+        try{ getData();
+            Client client = new Client(name, email, phone);
+            clientBLL.insertClient(client);
+        }catch (IllegalArgumentException e){e.printStackTrace();}
+
     }
 
     @FXML
     private void handleEditButton() {
-        getData();
-        Client client = new Client(id, name, email, phone);
-        clientBLL.editClient(client);
+        try{
+            getData();
+            Client client = new Client(id, name, email, phone);
+            clientBLL.editClient(client);
+        } catch (IllegalArgumentException e){e.printStackTrace();}
     }
 
     @FXML

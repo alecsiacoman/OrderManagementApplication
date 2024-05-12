@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     @FXML
-    private Button btnClient, btnProduct, btnOrder;
+    private Button btnClient, btnProduct, btnOrder, btnBills;
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception{
@@ -28,9 +28,12 @@ public class MainController implements Initializable {
                 stage = (Stage) btnProduct.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/product-view.fxml"));
             }
-            else{
+            else if (event.getSource() == btnOrder){
                 stage = (Stage) btnOrder.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/order-view.fxml"));
+            } else {
+                stage = (Stage) btnBills.getScene().getWindow();
+                root = FXMLLoader.load(getClass().getResource("/com/example/pt2024_30423_coman_alecsia_assignment_3/bills-view.fxml"));
             }
         }
         Scene scene = new Scene(root);

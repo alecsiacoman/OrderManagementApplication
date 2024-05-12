@@ -14,7 +14,7 @@
             <Font name="Segoe UI Bold" size="32.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="100.0" layoutY="206.0" prefHeight="57.0" prefWidth="576.0">
+      <HBox alignment="CENTER" layoutX="100.0" layoutY="204.0" prefHeight="57.0" prefWidth="576.0">
          <children>
             <Button fx:id="btnClient" mnemonicParsing="false" onAction="#handleButtonAction" text="Client operations">
                <font>

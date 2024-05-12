@@ -64,22 +64,22 @@ public class OrderController implements Initializable, TableColumnGenerator {
     private void handleAddButton() {
         try{
             getData();
+            Orders order = new Orders(client, product, quantity);
+            orderBLL.insertOrder(order);
         }catch (IllegalArgumentException e){
             e.printStackTrace();
         }
-        Orders order = new Orders(client, product, quantity);
-        orderBLL.insertOrder(order);
     }
 
     @FXML
     private void handleEditButton() {
         try{
             getData();
+            Orders orders = new Orders(id, client, product, quantity);
+            orderBLL.editOrder(orders);
         }catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        Orders orders = new Orders(id, client, product, quantity);
-        orderBLL.editOrder(orders);
     }
 
     @FXML

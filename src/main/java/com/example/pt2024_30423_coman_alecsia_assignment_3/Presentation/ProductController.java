@@ -73,16 +73,20 @@ public class ProductController implements Initializable, TableColumnGenerator {
 
     @FXML
     private void handleAddButton() {
-        try{getData();}catch (IllegalArgumentException e){e.printStackTrace();}
-        Product product = new Product(name, price, quantity);
-        productBLL.insertProduct(product);
+        try{getData();
+            Product product = new Product(name, price, quantity);
+            productBLL.insertProduct(product);
+        }catch (IllegalArgumentException e){e.printStackTrace();}
+
     }
 
     @FXML
     private void handleEditButton() {
-        getData();
-        Product product = new Product(id, name, price, quantity);
-        productBLL.editProduct(product);
+        try{
+            getData();
+            Product product = new Product(id, name, price, quantity);
+            productBLL.editProduct(product);
+        } catch (IllegalArgumentException e){e.printStackTrace();}
     }
 
     @FXML
