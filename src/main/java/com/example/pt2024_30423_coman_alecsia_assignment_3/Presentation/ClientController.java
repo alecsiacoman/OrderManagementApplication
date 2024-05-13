@@ -21,6 +21,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for handling client-related operations in the user interface.
+ */
 public class ClientController implements Initializable, TableColumnGenerator {
     @FXML
     private Button btnBack;
@@ -36,70 +39,94 @@ public class ClientController implements Initializable, TableColumnGenerator {
 
     private ClientBLL clientBLL;
 
+    /**
+     * Retrieves data from the input fields.
+     * @throws IllegalArgumentException If any required field is empty or invalid.
+     */
     private void getData() throws IllegalArgumentException {
         if (!txtID.getText().isEmpty()) {
             try {
                 this.id = Integer.parseInt(txtID.getText());
             } catch (NumberFormatException e) {
-                AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Invalid ID!");
+                throw new IllegalArgumentException("ID");
             }
         }
 
         if (txtName.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce a name for the client!");
-            throw new IllegalArgumentException("Name is required!");
+            throw new IllegalArgumentException("name");
         } else {
             this.name = txtName.getText();
         }
 
         if (txtEmail.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce an email for the client!");
-            throw new IllegalArgumentException("Email is required!");
+            throw new IllegalArgumentException("email");
         } else {
             this.email = txtEmail.getText();
         }
 
         if (txtPhone.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce a phone number for the client!");
-            throw new IllegalArgumentException("Phone number is required!");
+            throw new IllegalArgumentException("phone");
         } else {
             this.phone = txtPhone.getText();
         }
     }
 
+    /**
+     * Handles the action when the "Add" button is clicked.
+     */
     @FXML
     private void handleAddButton() {
         try{ getData();
             Client client = new Client(name, email, phone);
             clientBLL.insertClient(client);
-        }catch (IllegalArgumentException e){e.printStackTrace();}
-
+        }catch (IllegalArgumentException e){
+            throwMessages(e);
+        }
     }
 
+    /**
+     * Handles the action when the "Edit" button is clicked.
+     */
     @FXML
     private void handleEditButton() {
         try{
             getData();
             Client client = new Client(id, name, email, phone);
             clientBLL.editClient(client);
-        } catch (IllegalArgumentException e){e.printStackTrace();}
+        } catch (IllegalArgumentException e){
+            throwMessages(e);
+        }
     }
 
+    private void throwMessages(Exception e){
+        if(e.getMessage().equals("name"))
+            AlertUtils.showAlert("You must introduce a name for the client!");
+        else if (e.getMessage().equals("email"))
+            AlertUtils.showAlert("You must introduce an email for the client!");
+        else if (e.getMessage().equals("phone"))
+            AlertUtils.showAlert("You must introduce a phone number for the client!");
+        else if (e.getMessage().equals("ID"))
+            AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
+    }
+
+    /**
+     * Handles the action when the "Delete" button is clicked.
+     */
     @FXML
     private void handleDeleteButton(){
         if (!txtID.getText().isEmpty()) {
             try {
                 this.id = Integer.parseInt(txtID.getText());
+                clientBLL.deleteClient(id);
             } catch (NumberFormatException e) {
                 AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Incorrect ID!");
             }
-        }
-
-        clientBLL.deleteClient(id);
+        } else  AlertUtils.showAlert("You should introduce an ID.");
     }
 
+    /**
+     * Handles the action when the "View All" button is clicked.
+     */
     @FXML
     private void handleViewAllButton(){
         List<Client> clients = clientBLL.viewAllClients();
@@ -107,6 +134,11 @@ public class ClientController implements Initializable, TableColumnGenerator {
         clientTableView.setItems(clientList);
     }
 
+    /**
+     * Handles the action when the "Back" button is clicked.
+     * @param event The ActionEvent triggered by clicking the button.
+     * @throws Exception If an exception occurs while handling the action.
+     */
     @FXML
     private void handleBackAction(ActionEvent event) throws Exception{
         Stage stage;
@@ -123,6 +155,11 @@ public class ClientController implements Initializable, TableColumnGenerator {
         stage.show();
     }
 
+    /**
+     * Initializes the controller.
+     * @param url The location used to resolve relative paths for the root object.
+     * @param rb The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb){
         clientBLL = new ClientBLL();

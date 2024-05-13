@@ -44,28 +44,24 @@ public class ProductController implements Initializable, TableColumnGenerator {
             try {
                 this.id = Integer.parseInt(txtID.getText());
             } catch (NumberFormatException e) {
-                AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Incorrect ID!");
+                throw new IllegalArgumentException("ID");
             }
         }
 
         if (txtName.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce a name for the product!");
-            throw new IllegalArgumentException("Name is required!");
+            throw new IllegalArgumentException("name");
         } else {
             this.name = txtName.getText();
         }
 
         if (txtPrice.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce a price for the product!");
-            throw new IllegalArgumentException("Price is required!");
+            throw new IllegalArgumentException("price");
         } else {
             this.price = Double.parseDouble(txtPrice.getText());
         }
 
         if (txtQuantity.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce a quantity for the product!");
-            throw new IllegalArgumentException("Quantity is required!");
+            throw new IllegalArgumentException("quantity");
         } else {
             this.quantity = Integer.parseInt(txtQuantity.getText());
         }
@@ -73,11 +69,24 @@ public class ProductController implements Initializable, TableColumnGenerator {
 
     @FXML
     private void handleAddButton() {
-        try{getData();
+        try{
+            getData();
             Product product = new Product(name, price, quantity);
             productBLL.insertProduct(product);
-        }catch (IllegalArgumentException e){e.printStackTrace();}
+        } catch (IllegalArgumentException e){
+            throwMessages(e);
+        }
+    }
 
+    private void throwMessages(Exception e){
+        if(e.getMessage().equals("quantity"))
+            AlertUtils.showAlert("You must introduce a quantity for the product!");
+        else if (e.getMessage().equals("price"))
+            AlertUtils.showAlert("You must introduce a price for the product!");
+        else if (e.getMessage().equals("name"))
+            AlertUtils.showAlert("You must introduce a name for the product!");
+        else if (e.getMessage().equals("ID"))
+            AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
     }
 
     @FXML
@@ -86,7 +95,9 @@ public class ProductController implements Initializable, TableColumnGenerator {
             getData();
             Product product = new Product(id, name, price, quantity);
             productBLL.editProduct(product);
-        } catch (IllegalArgumentException e){e.printStackTrace();}
+        } catch (IllegalArgumentException e){
+            throwMessages(e);
+        }
     }
 
     @FXML
@@ -96,9 +107,8 @@ public class ProductController implements Initializable, TableColumnGenerator {
                 this.id = Integer.parseInt(txtID.getText());
             } catch (NumberFormatException e) {
                 AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Incorrect ID!");
             }
-        }
+        } else AlertUtils.showAlert("You should introduce an ID.");
 
         productBLL.deleteProduct(id);
     }

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.example.pt2024_30423_coman_alecsia_assignment_3.Model","l":"Client"}];updateSearchResults();

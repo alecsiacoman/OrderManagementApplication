@@ -44,17 +44,15 @@ public class OrderController implements Initializable, TableColumnGenerator {
             try {
                 this.id = Integer.parseInt(txtID.getText());
             } catch (NumberFormatException e) {
-                AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Incorrect ID!");
+                throw new IllegalArgumentException("ID");
             }
-        }
+        } else throw new IllegalArgumentException("ID");
 
         this.client = cmbClient.getValue();
         this.product = cmbProduct.getValue();
 
         if (txtQuantity.getText().isEmpty()) {
-            AlertUtils.showAlert("You must introduce a quantity for the order!");
-            throw new IllegalArgumentException("Quantity is required!");
+            throw new IllegalArgumentException("quantity");
         } else {
             this.quantity = Integer.parseInt(txtQuantity.getText());
         }
@@ -67,7 +65,10 @@ public class OrderController implements Initializable, TableColumnGenerator {
             Orders order = new Orders(client, product, quantity);
             orderBLL.insertOrder(order);
         }catch (IllegalArgumentException e){
-            e.printStackTrace();
+            if(e.getMessage().equals("quantity")){
+                AlertUtils.showAlert("You must introduce a quantity for the order!");
+            } else if (e.getMessage().equals("ID"))
+                AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
         }
     }
 
@@ -78,7 +79,10 @@ public class OrderController implements Initializable, TableColumnGenerator {
             Orders orders = new Orders(id, client, product, quantity);
             orderBLL.editOrder(orders);
         }catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            if(e.getMessage().equals("quantity")){
+                AlertUtils.showAlert("You must introduce a quantity for the order!");
+            } else if (e.getMessage().equals("ID"))
+                AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
         }
     }
 
@@ -87,13 +91,11 @@ public class OrderController implements Initializable, TableColumnGenerator {
         if (!txtID.getText().isEmpty()) {
             try {
                 this.id = Integer.parseInt(txtID.getText());
+                orderBLL.deleteOrder(id);
             } catch (NumberFormatException e) {
                 AlertUtils.showAlert("Incorrect ID! You should introduce a number.");
-                throw new IllegalArgumentException("Incorrect ID!");
             }
-        }
-
-        orderBLL.deleteOrder(id);
+        } else  AlertUtils.showAlert("You should introduce an ID.");
     }
 
     @FXML
@@ -102,7 +104,6 @@ public class OrderController implements Initializable, TableColumnGenerator {
         ObservableList<Orders> clientList = FXCollections.observableArrayList(orders);
         orderTableView.setItems(clientList);
     }
-
 
     @FXML
     private void handleBackAction(ActionEvent event) throws Exception{

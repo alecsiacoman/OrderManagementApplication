@@ -112,12 +112,10 @@ public class OrderDAO extends AbstractDAO<Orders> {
                         preparedStatement.setObject(parameterIndex++, value);
                 }
                 preparedStatement.executeUpdate();
-                LOGGER.info(tableName + " updated successfully");
                 AlertUtils.showMessage(tableName + " updated successfully");
 
             }
         } catch (SQLException | IllegalAccessException e) {
-            LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
             AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
         } catch (IllegalArgumentException e){
             AlertUtils.showAlert("Not enough stock!");

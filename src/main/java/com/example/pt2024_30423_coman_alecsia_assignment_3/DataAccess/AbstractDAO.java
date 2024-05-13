@@ -16,15 +16,26 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Abstract Data Access Object (DAO) class for handling CRUD operations on entities.
+ * @param <T> Type of the entity this DAO operates on.
+ */
 public abstract class AbstractDAO<T> {
-    protected static final Logger LOGGER = Logger.getLogger(ClientDAO.class.getName());
     private final Class<T> type;
 
+    /**
+     * Constructor to initialize the type of the entity class.
+     */
     @SuppressWarnings("unchecked")
     public AbstractDAO(){
         this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    /**
+     * Creates a select query based on a specified field.
+     * @param field The field to filter the query on.
+     * @return The generated select query.
+     */
     private String createSelectQuery(String field){
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT");
@@ -35,6 +46,12 @@ public abstract class AbstractDAO<T> {
         return sb.toString();
     }
 
+    /**
+     * Retrieves an entity by its ID.
+     * @param id The ID of the entity.
+     * @param idColumnName The name of the ID column in the database.
+     * @return The retrieved entity, or null if not found.
+     */
     public T findById(int id, String idColumnName) {
         T entity = null;
         Connection connection = ConnectionFactory.getConnection();
@@ -49,7 +66,7 @@ public abstract class AbstractDAO<T> {
                 entity = mapResultSetToEntity(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, "AbstractDAO:findById " + e.getMessage());
+           AlertUtils.showAlert("Couldn't find the " + type.getSimpleName());
         } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
@@ -58,24 +75,37 @@ public abstract class AbstractDAO<T> {
         return entity;
     }
 
+    /**
+     * Creates an insert query for the entity based on its fields.
+     * @param fields The fields of the entity.
+     * @return The generated insert query.
+     */
+    private String createInsertQuery(Field[] fields){
+        StringBuilder insertQuery = new StringBuilder();
+        insertQuery.append("INSERT INTO ").append(type.getSimpleName()).append(" (");
+        StringBuilder values = new StringBuilder();
+        values.append(") VALUES (");
+        for(Field field : fields){
+            field.setAccessible(true);
+            String fieldName = field.getName();
+            insertQuery.append(fieldName).append(",");
+            values.append("?,");
+        }
+        return insertQuery.deleteCharAt(insertQuery.length() - 1).append(values.deleteCharAt(values.length() - 1)).append(")").toString();
+    }
+
+    /**
+     * Inserts a new entity into the database.
+     * @param entity The entity to be inserted.
+     */
     public void insert(T entity){
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = null;
         String tableName = type.getSimpleName();
-        StringBuilder insertQuery = new StringBuilder("INSERT INTO ").append(tableName).append(" (");
-        StringBuilder values = new StringBuilder(") VALUES (");
 
         try{
             Field[] fields = type.getDeclaredFields();
-            for(Field field : fields){
-                field.setAccessible(true);
-                String fieldName = field.getName();
-                insertQuery.append(fieldName).append(",");
-                values.append("?,");
-            }
-
-            insertQuery.deleteCharAt(insertQuery.length() - 1).append(values.deleteCharAt(values.length() - 1)).append(")");
-            preparedStatement = connection.prepareStatement(insertQuery.toString());
+            preparedStatement = connection.prepareStatement(createInsertQuery(fields));
             int parameterIndex = 1;
             for(Field field : fields){
                 field.setAccessible(true);
@@ -93,6 +123,11 @@ public abstract class AbstractDAO<T> {
         }
     }
 
+    /**
+     * Edits an existing entity in the database.
+     * @param entity The entity with updated data.
+     * @param idColumnName The name of the ID column in the database.
+     */
     public void edit(T entity, String idColumnName) {
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = null;
@@ -111,7 +146,6 @@ public abstract class AbstractDAO<T> {
             StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
             Field[] fields = type.getDeclaredFields();
 
-            // Construct the UPDATE query
             for (Field field : fields) {
                 field.setAccessible(true);
                 String fieldName = field.getName();
@@ -136,22 +170,23 @@ public abstract class AbstractDAO<T> {
 
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
-                LOGGER.info(tableName + " updated successfully");
                 AlertUtils.showMessage(tableName + " updated successfully");
             } else {
-                LOGGER.warning("Failed to update " + tableName + ". No rows were affected.");
-                AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
+                 AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
             }
         } catch (SQLException | IllegalAccessException | NoSuchFieldException e) {
-            LOGGER.log(Level.WARNING, "AbstractDAO:edit " + e.getMessage());
-            AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
+                AlertUtils.showAlert("Failed to update " + tableName + ". No rows were affected.");
         } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
         }
     }
 
-
+    /**
+     * Deletes an entity from the database by its ID.
+     * @param id The ID of the entity to delete.
+     * @param idColumnName The name of the ID column in the database.
+     */
     public void delete(int id, String idColumnName) {
         String tableName = type.getSimpleName();
         if(findById(id, "id") != null) {
@@ -168,15 +203,13 @@ public abstract class AbstractDAO<T> {
                 preparedStatement.setInt(1, id);
                 int rowsDeleted = preparedStatement.executeUpdate();
                 if (rowsDeleted > 0) {
-                    LOGGER.info(tableName + " deleted successfully");
                     AlertUtils.showMessage(tableName + " deleted successfully");
                 } else {
-                    LOGGER.warning("Failed to delete " + tableName + ". No rows were affected.");
                     AlertUtils.showAlert("Failed to delete " + tableName + ". No rows were affected.");
                 }
 
             } catch (SQLException e) {
-                LOGGER.log(Level.WARNING, "AbstractDAO:delete " + e.getMessage());
+                AlertUtils.showAlert("Failed to delete " + tableName + ". No rows were affected.");
             } finally {
                 ConnectionFactory.close(connection);
                 ConnectionFactory.close(preparedStatement);
@@ -184,6 +217,11 @@ public abstract class AbstractDAO<T> {
         } else { AlertUtils.showAlert("Inexistent " + tableName + "!");}
     }
 
+    /**
+     * Deletes related records when deleting a client or product.
+     * @param columnName The name of the column related to client or product.
+     * @param id The ID of the client or product.
+     */
     private void deleteClientOrProduct(String columnName, int id){
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement preparedStatement = null;
@@ -203,6 +241,10 @@ public abstract class AbstractDAO<T> {
         }
     }
 
+    /**
+     * Retrieves all entities from the database.
+     * @return A list of all entities.
+     */
     public List<T> viewAll() {
         List<T> entities = new ArrayList<>();
         Connection connection = ConnectionFactory.getConnection();
@@ -219,8 +261,7 @@ public abstract class AbstractDAO<T> {
                 entities.add(entity);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, "AbstractDAO:viewAll " + e.getMessage());
-        } finally {
+            AlertUtils.showAlert("Failed to import " + tableName + ". No rows were affected."); } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
             ConnectionFactory.close(resultSet);
@@ -228,5 +269,11 @@ public abstract class AbstractDAO<T> {
         return entities;
     }
 
+    /**
+     * Maps a result set to an entity object.
+     * @param resultSet The result set from a database query.
+     * @return The mapped entity object.
+     * @throws SQLException If an SQL exception occurs.
+     */
     protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 }
