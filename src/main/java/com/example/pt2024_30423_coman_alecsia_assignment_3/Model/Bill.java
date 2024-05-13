@@ -30,8 +30,6 @@ public record Bill(ClientBLL clientBLL, ProductBLL productBLL, OrderBLL orderBLL
             PdfWriter.getInstance(document, new FileOutputStream("Bill" + nrBill + ".pdf"));
             document.open();
             for(Client client : clientList){
-
-
                 String info1 = new String();
                 boolean ok = false;
                 double totalPrice = 0;

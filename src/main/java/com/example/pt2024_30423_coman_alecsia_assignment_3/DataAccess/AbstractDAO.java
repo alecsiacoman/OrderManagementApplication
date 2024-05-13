@@ -5,6 +5,7 @@ import com.example.pt2024_30423_coman_alecsia_assignment_3.Connection.Connection
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Client;
 import com.example.pt2024_30423_coman_alecsia_assignment_3.Model.Product;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
@@ -124,6 +125,23 @@ public abstract class AbstractDAO<T> {
     }
 
     /**
+     * Creates an update query for the entity based on its fields.
+     * @param fields The fields of the entity.
+     * @return The generated update query.
+     */
+    private String createEditQuery(Field[] fields){
+        StringBuilder updateQuery = new StringBuilder("UPDATE ").append(type.getSimpleName()).append(" SET ");
+        for (Field field : fields) {
+            field.setAccessible(true);
+            String fieldName = field.getName();
+            if (!fieldName.equals("id")) {
+                updateQuery.append(fieldName).append(" = ?,");
+            }
+        }
+        return updateQuery.deleteCharAt(updateQuery.length() - 1).append(" WHERE ").append("id").append(" = ?").toString();
+    }
+
+    /**
      * Edits an existing entity in the database.
      * @param entity The entity with updated data.
      * @param idColumnName The name of the ID column in the database.
@@ -142,20 +160,9 @@ public abstract class AbstractDAO<T> {
                 AlertUtils.showAlert("The " + tableName + " with ID " + idValue + " does not exist.");
                 return;
             }
-
-            StringBuilder updateQuery = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
             Field[] fields = type.getDeclaredFields();
 
-            for (Field field : fields) {
-                field.setAccessible(true);
-                String fieldName = field.getName();
-                if (!fieldName.equals(idColumnName)) {
-                    updateQuery.append(fieldName).append(" = ?,");
-                }
-            }
-
-            updateQuery.deleteCharAt(updateQuery.length() - 1).append(" WHERE ").append(idColumnName).append(" = ?");
-            preparedStatement = connection.prepareStatement(updateQuery.toString());
+            preparedStatement = connection.prepareStatement(createEditQuery(fields));
 
             int parameterIndex = 1;
             for (Field field : fields) {
@@ -261,7 +268,8 @@ public abstract class AbstractDAO<T> {
                 entities.add(entity);
             }
         } catch (SQLException e) {
-            AlertUtils.showAlert("Failed to import " + tableName + ". No rows were affected."); } finally {
+            AlertUtils.showAlert("Failed to import " + tableName + ". No rows were affected.");
+        } finally {
             ConnectionFactory.close(connection);
             ConnectionFactory.close(preparedStatement);
             ConnectionFactory.close(resultSet);
@@ -275,5 +283,5 @@ public abstract class AbstractDAO<T> {
      * @return The mapped entity object.
      * @throws SQLException If an SQL exception occurs.
      */
-    protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
+   protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 }
