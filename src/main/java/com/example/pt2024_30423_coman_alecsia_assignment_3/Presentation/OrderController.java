@@ -46,7 +46,7 @@ public class OrderController implements Initializable, TableColumnGenerator {
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("ID");
             }
-        } else throw new IllegalArgumentException("ID");
+        }
 
         this.client = cmbClient.getValue();
         this.product = cmbProduct.getValue();
